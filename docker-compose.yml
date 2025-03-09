@@ -1,0 +1,48 @@
+services:
+    app:
+        build: .
+        container_name: hpai_core
+        volumes:
+            - .:/repository
+        ports:
+            - "9000:9000"
+        networks:
+            - hpai_network
+        depends_on:
+            - db
+
+    web:
+        image: nginx:latest
+        container_name: hpai_server
+        restart: always
+        ports:
+            - "8001:80"
+        volumes:
+            - .:/repository
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - hpai_network
+        depends_on:
+            - app
+
+    db:
+        image: postgres:17
+        container_name: hpai_db
+        restart: always
+        environment:
+            POSTGRES_DB: hpai_test
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: pwdpwd
+        ports:
+            - "5433:5432"
+        volumes:
+            - db_data:/var/lib/postgresql/data
+        networks:
+            - hpai_network
+
+networks:
+    hpai_network:
+        driver: bridge
+
+volumes:
+    db_data:
