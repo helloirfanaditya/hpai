@@ -157,7 +157,7 @@ Before proceeding, ensure you have the following installed:
 
 - **PHP** (≥ 8.1)
 - **Composer**
-- **Laravel** (latest version)
+- **Laravel 11**
 - **Docker & Docker Compose**
 - **PostgreSQL** (or any preferred database)
 - **Git**
